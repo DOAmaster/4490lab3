@@ -224,18 +224,16 @@ int main(int argc, char *argv[])
 		//1. Get the time right now. (done for you)
 		clock_gettime(CLOCK_REALTIME, &timeCurrent);
 
-
 		//
 		//2. How long since we were here last?
-
-
+		timeSpan = timeDiff(&timeStart, &timeCurrent);
 		//
 		//3. Save the current time as our new starting time.
-
+		timeCopy(&timeStart, &timeCurrent);
 
 		//
 		//4. Add time-span to our countdown amount.
-
+		physicsCountdown += timeSpan;
 
 		//
 		//5. Has countdown gone beyond our physics rate? 
@@ -247,19 +245,19 @@ int main(int argc, char *argv[])
 		//       if no,
 		//           Apply no physics this frame.
 		//
+			
 		if (g.use_metronome) {
 			while(physicsCountdown >= physicsRate) {
 				//6. Apply physics
-
+				physics();
 
 				//7. Reduce the countdown by our physics-rate
-
+				physicsCountdown -= physicsRate;
 
 			}
-
 			//This call to physics is temporary.
 			//Remove it when metronome is working.
-			physics();
+			//physics();
 
 		} else {
 			physics();
